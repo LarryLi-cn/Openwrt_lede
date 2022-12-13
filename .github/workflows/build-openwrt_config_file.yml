@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build OpenWrt_Larry
+name: Build Openwrt_config_file
 
 on:
   repository_dispatch:
