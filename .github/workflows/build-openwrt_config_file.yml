@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build Openwrt_config_file
+name: Build OpenWrt_Larry
 
 on:
   repository_dispatch:
@@ -116,8 +116,8 @@ jobs:
       if: (!cancelled())
       run: df -hT
 
-    - name: Upload config file
-      uses: actions/upload-artifact@main
+    - name: Organize files
+      id: organize
       run: |
         cd openwrt
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
@@ -126,6 +126,9 @@ jobs:
         rm -rf !(.config)
         mkdir menuconfig
         mv .config menuconfig
+
+    - name: Upload config file
+      uses: actions/upload-artifact@main
       with:
         name: OpenWrt_menuconfig${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/menuconfig
@@ -199,4 +202,3 @@ jobs:
         # delete_tags: true
       # env:
         # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
